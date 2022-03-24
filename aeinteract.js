@@ -15,6 +15,9 @@ ae.options.includes = [
  * @param  {String} filePath - path of aep or aepx file
  */
 const getProjectStructure = async (filePath) => {
+  ae(()=>{
+    app.beginSuppressDialogs();
+  })
   const output = await ae.execute((fp) => {
     var fileToOpen = new File(fp);
     app.open(fileToOpen);
@@ -101,7 +104,7 @@ const getProjectStructure = async (filePath) => {
     c[output.compMapping[k]] = output["compositions"][k];
   });
 
-  await ae.execute(() => {
+  ae(() => {
     app.quit();
   });
   return {
