@@ -103,15 +103,12 @@ const getProjectStructure = async (filePath) => {
   Object.keys(output["compositions"]).map((k) => {
     c[output.compMapping[k]] = output["compositions"][k];
   });
-
-  ae(() => {
+//not working
+  await ae.execute(() => {
     app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
   });
-  ae(() => {
+  await ae.execute(() => {
     app.quit();
-  });
-    ae(() => {
-      app.endSuppressDialogs(false)
   });
 
   return {
