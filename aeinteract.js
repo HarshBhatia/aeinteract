@@ -105,8 +105,15 @@ const getProjectStructure = async (filePath) => {
   });
 
   ae(() => {
+    app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
+  });
+  ae(() => {
     app.quit();
   });
+    ae(() => {
+      app.endSuppressDialogs(false)
+  });
+
   return {
     compositions: c,
     staticAssets: Array.from(output.staticAssets),
