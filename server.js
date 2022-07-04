@@ -18,7 +18,7 @@ if (!fs.existsSync(aeDir)) {
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", (req, res) => res.send("OKa"));
+app.get("/", (req, res) => res.send({ status: "ok" }));
 
 app.post("/", (req, res, next) => {
   try {

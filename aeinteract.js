@@ -3,7 +3,7 @@ const path = require("path");
 
 // ae.options.errorHandling = true;
 // ae.options.minify = false;
-ae.options.program="C:/Program Files/Adobe/Adobe After Effects 2022"
+ae.options.program="C:/Program Files/Adobe/Adobe After Effects 2021"
 ae.options.includes = [
   // "./node_modules/after-effects/lib/includes/console.jsx",
   // "./node_modules/after-effects/lib/includes/es5-shim.jsx",
