@@ -22,7 +22,7 @@
     "cors": "^2.8.5",
     "es5-shim": "^4.5.14",
     "express": "^4.17.1",
-    "express-fileupload": "^1.1.7-alpha.2",
+    "express-fileupload": "^1.1.10",
     "multer": "^1.4.2",
     "socket.io": "^2.3.0"
   }
