@@ -3,7 +3,7 @@ const path = require("path");
 
 // ae.options.errorHandling = true;
 // ae.options.minify = false;
-ae.options.program="C:/Program Files/Adobe/Adobe After Effects 2022"
+ae.options.program = "C:/Program Files/Adobe/Adobe After Effects 2021"
 ae.options.includes = [
   // "./node_modules/after-effects/lib/includes/console.jsx",
   // "./node_modules/after-effects/lib/includes/es5-shim.jsx",
@@ -15,6 +15,8 @@ ae.options.includes = [
  * @param  {String} filePath - path of aep or aepx file
  */
 const getProjectStructure = async (filePath) => {
+  app.beginSuppressDialogs();
+  app.endSuppressDialogs(false)
   const output = await ae.execute((fp) => {
     var fileToOpen = new File(fp);
     app.open(fileToOpen);
@@ -101,9 +103,8 @@ const getProjectStructure = async (filePath) => {
     c[output.compMapping[k]] = output["compositions"][k];
   });
 
-  await ae.execute(() => {
-    app.quit();
-  });
+  app.quit();
+ 
   return {
     compositions: c,
     staticAssets: Array.from(output.staticAssets),

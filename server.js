@@ -6,6 +6,7 @@ const app = require("express")();
 const bodyParser = require("body-parser");
 
 const ae = require("./aeinteract");
+const { isExtracting, pingState } = require("./pingState");
 const aeDir = "./temp";
 
 const PORT = 80;
@@ -18,9 +19,9 @@ if (!fs.existsSync(aeDir)) {
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", (req, res) => res.send("OKa"));
-
-app.post("/", (req, res, next) => {
+app.get("/", (req, res) => res.send({ status: "OK" }));
+app.get("/status", (req, res) => res.send({ idle: !isExtracting }));
+app.post("/", async (req, res, next) => {
   try {
     const { fileUrl } = req.body;
     if (!fileUrl) return res.status(400).json({ message: "no file provided" });
@@ -28,7 +29,8 @@ app.post("/", (req, res, next) => {
     const type = path.basename(fileUrl).split(".").pop();
     if (!["aep", "aepx"].includes(type))
       return res.status(400).json({ message: "Invalid file type" });
-
+    //mark as not idle
+    await pingState(false)
     const filename = `${Date.now()}.${type}`;
     const file = fs.createWriteStream(`temp/${filename}`);
 
@@ -36,18 +38,23 @@ app.post("/", (req, res, next) => {
       response.pipe(file);
       console.log(file.path);
       ae.getProjectStructure(file.path)
-        .then((output) => {
+        .then(async (output) => {
           // fs.unlinkSync(`./temp/${filename}`);
-
+          //mark as idle
+          await pingState(true)
           return res.json(output);
         })
-        .catch((err) => {
+        .catch(async (err) => {
           console.log(err);
+          //mark as idle
+          await pingState(true)
           next(err);
         });
     });
   } catch (err) {
     console.log(err);
+    //mark as idle
+    await pingState(true)
     next(err);
   }
 });
