@@ -4,9 +4,8 @@ const cors = require("cors");
 const https = require("https");
 const app = require("express")();
 const bodyParser = require("body-parser");
-
 const ae = require("./aeinteract");
-const { isExtracting, pingState } = require("./pingState");
+const { getExtractionServerState, pingState } = require("./pingState");
 const aeDir = "./temp";
 
 const PORT = 80;
@@ -20,7 +19,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/", (req, res) => res.send({ status: "OK" }));
-app.get("/status", (req, res) => res.send({ idle: !isExtracting }));
+app.get("/status", (req, res) => res.send(getExtractionServerState()));
+
 app.post("/", async (req, res, next) => {
   try {
     const { fileUrl } = req.body;

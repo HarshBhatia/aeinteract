@@ -13,4 +13,7 @@ const pingState = async (isIdle) => {
         console.log("Error while marking state", err.message)
     }
 }
-module.exports = { pingState, isExtracting }
+const getExtractionServerState = () => {
+    return { idle: !isExtracting }
+}
+module.exports = { pingState, getExtractionServerState }
