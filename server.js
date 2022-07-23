@@ -42,6 +42,7 @@ app.post("/", async (req, res, next) => {
           // fs.unlinkSync(`./temp/${filename}`);
           //mark as idle
           await pingState(true)
+          fs.unlinkSync(file.path);
           return res.json(output);
         })
         .catch(async (err) => {
