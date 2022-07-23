@@ -3,11 +3,7 @@ const path = require("path");
 
 // ae.options.errorHandling = true;
 // ae.options.minify = false;
-<<<<<<< HEAD
-ae.options.program = "C:/Program Files/Adobe/Adobe After Effects 2021"
-=======
 ae.options.program="C:/Program Files/Adobe/Adobe After Effects 2021"
->>>>>>> 3a7b0741cc0aff072d2558c890825cca174dcae3
 ae.options.includes = [
   // "./node_modules/after-effects/lib/includes/console.jsx",
   // "./node_modules/after-effects/lib/includes/es5-shim.jsx",
@@ -19,14 +15,9 @@ ae.options.includes = [
  * @param  {String} filePath - path of aep or aepx file
  */
 const getProjectStructure = async (filePath) => {
-<<<<<<< HEAD
-  app.beginSuppressDialogs();
-  app.endSuppressDialogs(false)
-=======
   ae(()=>{
     app.beginSuppressDialogs();
   })
->>>>>>> 3a7b0741cc0aff072d2558c890825cca174dcae3
   const output = await ae.execute((fp) => {
     var fileToOpen = new File(fp);
     app.open(fileToOpen);
